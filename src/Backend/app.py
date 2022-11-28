@@ -46,6 +46,7 @@ from src.Backend.utils import *
 # Flask application configuration
 app = Flask(__name__)
 CORS(app)
+UPLOAD_FOLDER = "images/"
 
 #### error handlers ####
 # http exceptions handler
@@ -140,6 +141,19 @@ def home():
     return jsonify({"status": 200, "data": {}, "message": ""})
 
 
+@app.route('/uploadimage', methods=['POST', 'GET', 'OPTIONS'])
+def upload_image():
+
+    print(request.files)
+    img = request.files['image']
+    file_name = img.filename
+    target = os.path.join(UPLOAD_FOLDER, file_name)
+    img.save(target)
+    print(request.data)
+
+    return jsonify({"status": 200, "data": {"imgName": file_name}, "message": ""})
+
+
 @app.route('/additem', methods=['POST', 'GET', 'OPTIONS'])
 def additem():
     """
@@ -164,7 +178,7 @@ def additem():
         data = json.loads(request.data)
 
         status, msg = insert_item(
-            data['item_name'], data['quantity'], data['description'], data['zipcode'], data['city'], data['donor_id'], data['category'])
+            data['item_name'], data['quantity'], data['description'], data['zipcode'], data['city'], data['donor_id'], data['category'], data['img_url'])
 
         if status:
             return jsonify({"status": 200, "data": {}, "message": msg})

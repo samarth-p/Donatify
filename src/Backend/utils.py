@@ -77,7 +77,7 @@ def get_items(page, user_id):
     #         print("MySQL connection is closed")
 
 
-def insert_item(item_name, quantity, description, zipcode, city, donor_id, category):
+def insert_item(item_name, quantity, description, zipcode, city, donor_id, category, img_url):
     """
     Inserts an item into the database.
 
@@ -107,11 +107,11 @@ def insert_item(item_name, quantity, description, zipcode, city, donor_id, categ
     try:
         print(item_name)
         cursor = connection.cursor(dictionary=True)
-        mysql_insert_query = """INSERT INTO items (item_name, quantity, description, zipcode, city, donor_id, category) 
-                                VALUES (%s, %s, %s, %s, %s, %s, %s) """
+        mysql_insert_query = """INSERT INTO items (item_name, quantity, description, zipcode, city, donor_id, category, img_url) 
+                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s) """
 
         record = (item_name, quantity, description,
-                  zipcode, city, donor_id, category)
+                  zipcode, city, donor_id, category, img_url)
         cursor.execute(mysql_insert_query, record)
         connection.commit()
         print("Record inserted successfully into item table")
@@ -198,10 +198,11 @@ def getDonorHistory(ID):
         cursor.execute(
             'SELECT * FROM items where donor_id = %s', (int(ID),))
         data = cursor.fetchall()
-        print(data)
+        # print(data)
         for record in data:
+            img_name = record["img_url"] if record["img_url"] is not None else ''
             finalData.append({"itemId": record["item_id"], "itemName": record["item_name"], "itemQuantity": record["quantity"], "itemDescription": record["description"],
-                              "itemZipCode": record["zipcode"], "itemCity": record["city"], "itemDonorId": record["donor_id"], "itemCategory": record["category"]})
+                              "itemZipCode": record["zipcode"], "itemCity": record["city"], "itemDonorId": record["donor_id"], "itemCategory": record["category"], "imgName": img_name})
         # print(record[0]["Interests"])
         cursor.close()
         return True, finalData
