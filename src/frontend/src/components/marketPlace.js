@@ -258,7 +258,7 @@ class MarketPlace extends Component {
 		};
 		return (
 			<>
-				{this.state.isModalOpen ? (<Modal title="Basic Modal" open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+				{this.state.isModalOpen ? (<Modal title={this.state.items.itemName} open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
 					<p>Item Name: {this.state.items.itemName}</p>
 					<p>Item Quantity: {this.state.items.itemQuantity}</p>
 					<p>Item Description: {this.state.items.itemDescription}</p>
@@ -266,13 +266,13 @@ class MarketPlace extends Component {
 					<p>Item City: {this.state.items.itemCity}</p>
 					<p>Item Category: {this.state.items.itemCategory}</p>
 				</Modal>) : (<></>)}
-				<Card title="market place">
+				<Card title="Market Place">
 					{this.state.recipientItems.length > 0 ? (
 						this.state.recipientItems.map((d) => (
 							<Card.Grid style={gridStyle}>
 								<Card
 									style={{
-										width: 100,
+										width: '100%',
 									}}
 									cover={
 										<img
@@ -289,10 +289,10 @@ class MarketPlace extends Component {
 										title={d.itemName}
 										description={d.itemDescription}
 									/>
-									<Button type="primary" onClick={() => showModal(d)}>
+									<Button type="primary" onClick={() => showModal(d)} style={{ margin: 6, marginLeft: 20 }}>
 										View Details
 									</Button>
-									<Button type="primary" onClick={() => this.showDonorContact(d.donorEmail)}>
+									<Button type="primary" onClick={() => this.showDonorContact(d.donorEmail)} style={{ marginBottom: 10, marginLeft: 20 }}>
 										Contact Donor
 									</Button>
 									{/* {this.state.showAlert ? (<Alert
