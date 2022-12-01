@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import getRecipientItemsAPI from '../API/getRecipientItems';
 import { Card, Avatar, Modal, Button } from 'antd';
 const { Meta } = Card;
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 // const recieveItemAPI = require('../API/recieveItem');
 
 /**
@@ -17,7 +19,7 @@ class MarketPlace extends Component {
 		super(props);
 		this.state = {
 			recipientItems: [],
-			history: 'All',
+			cityChoice: 'All',
 			isModalOpen: false,
 			showAlert: false,
 		};
@@ -184,11 +186,14 @@ class MarketPlace extends Component {
 	 * Update state with type of history required
 	 * @param {Object} event onChange event for user input
 	 */
-	setHistory = (event) => {
-		console.log('radio', event);
+	setCity = (event) => {
+		let city = event.value;
+		console.log(city);
 		this.setState({
-			history: event.target.value
-		});
+			cityChoice: city
+		}
+		);
+		//this.loadData;
 	};
 
 	/**
@@ -217,6 +222,25 @@ class MarketPlace extends Component {
 	 * @returns {React.Component} Cards with available items
 	 */
 	render() {
+		const cities = [
+			{
+				label: 'Raleigh',
+				value: 'raleigh'
+			},
+			{
+				label: 'Cary',
+				value: 'cary'
+			},
+			{
+				label: 'Durham',
+				value: 'durham'
+			},
+			{
+				label: 'All',
+				value: 'All'
+			}
+		];
+		const animatedComponents = makeAnimated();
 		const gridStyle = {
 			width: '25%',
 			textAlign: 'center',
@@ -266,8 +290,20 @@ class MarketPlace extends Component {
 					<p>Item City: {this.state.items.itemCity}</p>
 					<p>Item Category: {this.state.items.itemCategory}</p>
 				</Modal>) : (<></>)}
+				<Select
+					closeMenuOnSelect={true}
+					components={animatedComponents}
+					options={cities}
+					isMulti={false}
+					placeholder={this.state.cityChoice}
+					defaultValue={this.state.cityChoice}
+					maxMenuHeight={200}
+					menuPlacement='top'
+					name='city'
+					onChange={this.setCity}
+				/>
 				<Card title="Market Place">
-					{this.state.recipientItems.length > 0 ? (
+					{(this.state.recipientItems.length > 0 && this.state.cityChoice === 'All') ? (
 						this.state.recipientItems.map((d) => (
 							<Card.Grid style={gridStyle}>
 								<Card
@@ -304,6 +340,48 @@ class MarketPlace extends Component {
 
 
 								</Card>
+							</Card.Grid>
+						))
+					) : (<></>)}
+					{(this.state.recipientItems.length > 0 && this.state.cityChoice !== 'All') ? (
+						this.state.recipientItems.map((d) => (
+							<Card.Grid style={gridStyle}>
+								{(d.itemCity === this.state.cityChoice) ? (
+									<Card
+										style={{
+											width: '100%',
+										}}
+										cover={
+											<img
+												alt="example"
+												src="https://picsum.photos/300/200"
+											/>
+										}
+									// actions={[
+									//   <FolderViewOutlined key="view" />
+									// ]}
+									>
+										<Meta
+											avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+											title={d.itemName}
+											description={d.itemDescription}
+										/>
+										<Button type="primary" onClick={() => showModal(d)} style={{ margin: 6, marginLeft: 20 }}>
+											View Details
+										</Button>
+										<Button type="primary" onClick={() => this.showDonorContact(d.donorEmail)} style={{ marginBottom: 10, marginLeft: 20 }}>
+											Contact Donor
+										</Button>
+										{/* {this.state.showAlert ? (<Alert
+											message="Donor Details"
+											description={`email: ${d.donorEmail}`}
+											type="info"
+											showIcon
+										/>) : (<div></div>)} */}
+
+
+									</Card>
+								) : (<></>)}
 							</Card.Grid>
 						))
 					) : (<></>)}
