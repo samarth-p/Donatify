@@ -140,7 +140,7 @@ class History extends Component {
 		};
 		return (
 			<>
-				{this.state.isModalOpen ? (<Modal title="Basic Modal" open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+				{this.state.isModalOpen ? (<Modal title={this.state.d.itemName} open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
 					<p>Item Name: {this.state.d.itemName}</p>
 					<p>Item Quantity: {this.state.d.itemQuantity}</p>
 					<p>Item Description: {this.state.d.itemDescription}</p>
