@@ -215,7 +215,7 @@ class History extends Component {
 										title={d.itemName}
 										description={d.itemDescription}
 									/>
-									<Button type="primary" onClick={showModal}>
+									<Button type="primary"onClick={() => showModal(d)}>
 										View Details
 									</Button>
 
