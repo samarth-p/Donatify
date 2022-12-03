@@ -197,7 +197,7 @@ class TestApp(unittest.TestCase):
     def test_additem(self, mock_insert_item):
         tester = app.test_client(self)
         inpData = {"item_name": "Rice", "quantity": 1, "description": "Rice",
-                   "zipcode": "27605", "city": "Raleigh", "donor_id": 3, "category": "Food"}
+                   "zipcode": "27605", "city": "Raleigh", "donor_id": 3, "category": "Food", "img_url": "test.png"}
         mock_insert_item.return_value = True, "Record inserted successfully into item table"
         response = tester.post("/additem", data=json.dumps(inpData),
                                headers={'content-type': 'application/json'})
