@@ -42,11 +42,12 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 from src.Backend.utils import *
+import os
 
 # Flask application configuration
 app = Flask(__name__)
 CORS(app)
-UPLOAD_FOLDER = "images/"
+UPLOAD_FOLDER = "src/Backend/images/"
 
 #### error handlers ####
 # http exceptions handler
@@ -144,11 +145,14 @@ def home():
 @app.route('/uploadimage', methods=['POST', 'GET', 'OPTIONS'])
 def upload_image():
 
+    if not os.path.isdir(UPLOAD_FOLDER):
+        os.mkdir(UPLOAD_FOLDER)
     print(request.files)
     img = request.files['image']
     file_name = img.filename
-    target = os.path.join(UPLOAD_FOLDER, file_name)
-    img.save(target)
+    if UPLOAD_FOLDER not in file_name:
+        file_name = os.path.join(UPLOAD_FOLDER, file_name)
+    img.save(file_name)
     print(request.data)
 
     return jsonify({"status": 200, "data": {"imgName": file_name}, "message": ""})
