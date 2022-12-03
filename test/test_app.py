@@ -1,9 +1,10 @@
+import os.path
 import unittest
 from unittest.mock import patch
 import json
 from urllib import response
 
-from src.Backend.app import app
+from src.Backend.app import app, UPLOAD_FOLDER
 
 
 class TestApp(unittest.TestCase):
@@ -224,3 +225,14 @@ class TestApp(unittest.TestCase):
                                             "description": "Left over rice", "zipcode": "27606", "city": "Raleigh", "donor_id": 2, "category": "Food"},
                     "message": "Fetched records successfully"}
         assert expected == json.loads(response.get_data(as_text=True))
+
+    def test_upload_image(self):
+        tester = app.test_client(self)
+        img_path = os.path.join(UPLOAD_FOLDER, 'test.png')
+        with open(img_path, 'rb') as fp:
+            response = tester.post("/uploadimage", data={"image": fp})
+
+        assert response.status_code == response.json['status'] == 200
+        assert response.json['message'] == ""
+        assert img_path in response.json['data']['imgName']
+
