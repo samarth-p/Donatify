@@ -210,4 +210,3 @@ Please do contact any of us:
 ## Contributors ✨
 
 Thanks goes to [these](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/graphs/contributors) wonderful people.
-
