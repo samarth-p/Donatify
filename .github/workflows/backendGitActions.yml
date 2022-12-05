@@ -45,7 +45,7 @@ jobs:
 
     - name: Set up MySQL
       run: |
-        mysql -h 127.0.0.1 -u root -e 'CREATE DATABASE IF NOT EXISTS donationsystem;'
+        mysql -u root -e 'CREATE DATABASE IF NOT EXISTS donationsystem;'
 
     - name: Test and code coverage with custom test engine
       run: |
