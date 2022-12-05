@@ -37,7 +37,7 @@ jobs:
     - name: Set up MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql -e 'CREATE DATABASE donationsystem;' -u root
+        mysql -e 'CREATE DATABASE donationsystem;' -u root -ppassword
 
     - name: Test and code coverage with custom test engine
       run: |
