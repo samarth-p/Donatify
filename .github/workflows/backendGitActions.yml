@@ -30,7 +30,8 @@ jobs:
 
     - name: Set up MySQL
       run:  |
-        mysql -h 127.0.0.1 -P 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS donationsystem; use donationsystem; source src/database/donationsystem.sql'
+        mysql -h 127.0.0.1 -P 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS donationsystem;'
+        mysql -h 127.0.0.1 -P 8888 -u root -ppassword donationsystem < src/database/donationsystem.sql;
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
