@@ -4,6 +4,6 @@ from asyncio import constants
 constants = {
     "host": "localhost",
     "user": "root",
-    "password": "",
+    "password": "password",
     "database": "donationsystem"
 }
