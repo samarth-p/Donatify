@@ -25,7 +25,6 @@ jobs:
     - name: Set up MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql -h 127.0.0.1 -P 3306 -u root -e 'CREATE DATABASE IF NOT EXISTS donationsystem;'
 
     - name: Checkout repository
       uses: actions/checkout@v3
