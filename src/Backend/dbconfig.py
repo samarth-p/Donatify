@@ -5,6 +5,6 @@ constants = {
     "host": "127.0.0.1",
     "user": "root",
     "password": "password",
-    "database": "donationsystem"
+    "database": "donationsystem",
     "port": "8888"
 }
