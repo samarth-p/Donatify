@@ -8,7 +8,12 @@ from ast import literal_eval as make_tuple
 from src.Backend.dbconfig import constants
 
 connection = mysql.connector.connect(
-    host=constants["host"], user=constants["user"], password=constants["password"], database=constants["database"])
+    host='127.0.0.1',
+    database='donationsystem',
+    user='root',
+    password='password',
+    port=8888
+)
 # cursor = connection.cursor(dictionary=True)
 # cursor.execute('set GLOBAL max_allowed_packet=67108864')
 # connection.query('SET GLOBAL connect_timeout=6000')
