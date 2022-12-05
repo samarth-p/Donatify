@@ -12,19 +12,22 @@ jobs:
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
     services:
-     mysql:
-        image: mysql:8.0
+      mysql:
+        image: mysql:8
         env:
-            MYSQL_ALLOW_EMPTY_PASSWORD: yes
-            MYSQL_DATABASE: donationsystem
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_pass
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: donationsystem
         ports:
-            - 3306
+          - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
     - name: Set up MySQL
       run: |
         sudo /etc/init.d/mysql start
+          mysql -h 127.0.0.1 -u test_user -ptest_pass -e 'CREATE DATABASE IF NOT EXISTS donationsystem;'
 
     - name: Checkout repository
       uses: actions/checkout@v3
