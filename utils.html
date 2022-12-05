@@ -36,13 +36,11 @@ import mysql.connector
 from ast import literal_eval as make_tuple
 from src.Backend.dbconfig import constants
 
-connection = mysql.connector.connect(
-    host=&#39;127.0.0.1&#39;,
-    database=&#39;donationsystem&#39;,
-    user=&#39;root&#39;,
-    password=&#39;password&#39;,
-    port=8888
-)
+try:
+    connection = mysql.connector.connect(
+        host=constants[&#34;host&#34;], user=constants[&#34;user&#34;], password=constants[&#34;password&#34;], database=constants[&#34;database&#34;])
+except:
+    pass
 # cursor = connection.cursor(dictionary=True)
 # cursor.execute(&#39;set GLOBAL max_allowed_packet=67108864&#39;)
 # connection.query(&#39;SET GLOBAL connect_timeout=6000&#39;)
