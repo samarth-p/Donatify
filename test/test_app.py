@@ -1,7 +1,7 @@
-import json
-import os.path
 import unittest
 from unittest.mock import patch
+import json
+from urllib import response
 
 from src.Backend.app import app
 
@@ -49,10 +49,12 @@ class TestApp(unittest.TestCase):
         expected = {"status": 200, "data": {}, "message": "Backend working"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    def test_updateprofile_put(self):
+    @patch('src.Backend.app.updateProfile')
+    def test_updateprofile_put(self, mock_updateProfile):
         tester = app.test_client(self)
+        mock_updateProfile.return_value = True, "Record updated successfully into item table"
         inpData = {"name": "Sam", "email": "sam@gmail.com", "city": [
-            "Raleigh", "Durham"], "zipCodes": ["27606"], "interests": ["Food"], "id": 2}
+            "Raleigh", "Durham"], "zipcode": ["27606"], "interests": ["Food"], "ID": 3}
         response = tester.put("/updateprofile", data=json.dumps(inpData),
                               headers={'content-type': 'application/json'})
         expected = {"status": 200, "data": {},
